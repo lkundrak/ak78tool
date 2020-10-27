@@ -1,0 +1,11 @@
+AK7802 USB Flashing Tool
+========================
+
+This is a tool that implements the USB boot protocol of the Ankya AK7802 (and
+similar -- perhaps AK78xx and AK88xx) processors. The protocol has been
+reverse-engineered from BurnTool.exe traffic dump.
+
+It can be used to replace the system firmware or restore the stock one.
+
+See flash-ce.sh for an example of how to use it to flash back the stock
+firmware provided you get hold of the right images.
