@@ -96,7 +96,7 @@ write_data (libusb_device_handle *dev, int fd, int len, int remaining)
 		}
 
 		if (xferred != to_xfer) {
-			fprintf (stderr, "Short write: %d/%d\n", xferred, sizeof(pkt));
+			fprintf (stderr, "Short write: %d/%ld\n", xferred, sizeof(pkt));
 			return -1;
 		}
 
@@ -177,7 +177,7 @@ boot_op (libusb_device_handle *dev, uint8_t op, uint32_t f1, uint32_t f2, uint32
 	}
 
 	if (xferred != sizeof(pkt)) {
-		fprintf (stderr, "Short write issuing command 0x%02x: %d/%d\n", op, xferred, sizeof(pkt));
+		fprintf (stderr, "Short write issuing command 0x%02x: %d/%ld\n", op, xferred, sizeof(pkt));
 		return -1;
 	}
 
@@ -241,7 +241,7 @@ prod_prepare (libusb_device_handle *dev, uint8_t op, uint32_t f1, uint32_t f2)
 	}
 
 	if (xferred != sizeof(pkt)) {
-		fprintf (stderr, "Short write submitting command 0x%02x: %d/%d\n", op, xferred, sizeof(pkt));
+		fprintf (stderr, "Short write submitting command 0x%02x: %d/%ld\n", op, xferred, sizeof(pkt));
 		return -1;
 	}
 
@@ -268,7 +268,7 @@ prod_run (libusb_device_handle *dev)
 	}
 
 	if (xferred != sizeof(pkt)) {
-		fprintf (stderr, "Short write starting command: %d/%d\n", xferred, sizeof(pkt));
+		fprintf (stderr, "Short write starting command: %d/%ld\n", xferred, sizeof(pkt));
 		return -1;
 	}
 
