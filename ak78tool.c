@@ -436,7 +436,7 @@ main (int argc, char *argv[])
 
 			close(fd);
 
-			ret = boot_op (dev, BOOT_DOWNLOAD_DONE, f1, f2, f3);
+			ret = boot_op (dev, BOOT_DOWNLOAD_DONE, f1, f2, PROD_NO_ARG);
 			if (ret)
 				goto err_close;
 
