@@ -309,10 +309,8 @@ open_dev (libusb_context *ctx)
 	int ret;
 
 	dev = libusb_open_device_with_vid_pid (ctx, 0x0471, 0x0666);
-	if (dev == NULL) {
-		fprintf (stderr, "Device not found.\n");
+	if (dev == NULL)
 		return NULL;
-	}
 
 	ret = libusb_claim_interface (dev, 0);
 	if (ret) {
@@ -345,8 +343,10 @@ main (int argc, char *argv[])
 	}
 
 	dev = open_dev (ctx);
-	if (dev == NULL)
+	if (dev == NULL) {
+		fprintf (stderr, "Device not found.\n");
 		goto err_exit;
+	}
 
 	for (i = 1; i < argc; i++) {
 		uint32_t f1, f2, f3;
@@ -652,21 +652,22 @@ main (int argc, char *argv[])
 				fprintf (stderr, " done.\n");
 
 		} else if (strcmp (argv[i], "waitreset") == 0) {
-			int addr1 = 0, addr2 = 0;
+			int addr1 = libusb_get_device_address (libusb_get_device (dev));
+			int addr2 = addr1;
 
 			if (!quiet)
 				fprintf (stderr, "Waiting for the device to reset...");
 
+			libusb_close (dev);
 			do {
-				if (dev)
-					addr1 = libusb_get_device_address (libusb_get_device (dev));
 				sleep (1);
 				dev = open_dev (ctx);
-				if (dev == NULL)
+				if (dev == NULL) {
+					if (!quiet)
+						fputc ('.', stderr);
 					continue;
+				}
 				addr2 = libusb_get_device_address (libusb_get_device (dev));
-				if (!quiet)
-					fputc ('.', stderr);
 			} while (addr1 == addr2);
 
 			if (!quiet)
