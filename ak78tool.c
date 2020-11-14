@@ -34,7 +34,7 @@ int quiet = 0;
 static int
 read_data (libusb_device_handle *dev, int fd, int len)
 {
-	unsigned char pkt[4096] = { 0, };
+	unsigned char pkt[64] = { 0, };
 	int xferred = 0;
 	int ret;
 
